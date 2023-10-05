@@ -56,9 +56,9 @@ class Adaline(object):
             if self.shuffle:
                 X, y = self.__shuffle(X, y)
 
-            for xi, target in zip(X, y):
 
-               # TODO: Put your code here
+
+
 
 
 
