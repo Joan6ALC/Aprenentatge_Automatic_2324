@@ -11,8 +11,10 @@ from sklearn.preprocessing import MinMaxScaler
 def kernel_lineal(x1, x2):
     return x1.dot(x2.T)
 
-def kernel_rbf(x1, x2, gamma = 10):
-    return np.exp(-gamma * distance_matrix(x1, x2)**2)
+
+def kernel_rbf(x1, x2, gamma=10):
+    return np.exp(-gamma * distance_matrix(x1, x2) ** 2)
+
 
 X, y = make_classification(n_samples=100, n_features=2, n_redundant=0, n_repeated=0,
                            n_classes=2, n_clusters_per_class=1, class_sep=0.5,
@@ -24,7 +26,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random
 ## FEINA 1
 # Els dos algorismes es beneficien d'estandaritzar les dades
 
-scaler = StandardScaler()
+scaler = MinMaxScaler()
 X_transformed = scaler.fit_transform(X_train)
 X_test_transformed = scaler.transform(X_test)
 
@@ -59,12 +61,12 @@ svm_rbf.fit(X_transformed, y_train)
 y_rbf = svm_rbf.predict(X_test_transformed)
 
 # Entrenam el nostre SVM rbf
-svm_meu_rbf = SVC(C=1.0, kernel=kernel_rbf, random_state=33)
-svm_meu_rbf.fit(X_transformed, y_train)
-y_meu_rbf = svm_meu_rbf.predict(X_test_transformed)
+svm_rbf2 = SVC(C=1.0, kernel=kernel_rbf, random_state=33)
+svm_rbf2.fit(X_transformed, y_train)
+y_rbf2 = svm_rbf2.predict(X_test_transformed)
 
 accuracy_rbf = np.mean(y_rbf == y_test)
-accuracy_meu_rbf = np.mean(y_meu_rbf == y_test)
+accuracy_meu_rbf = np.mean(y_rbf2 == y_test)
 
 print("Accuracy SVM rbf: ", accuracy_rbf)
 print("Accuracy SVM meu rbf: ", accuracy_meu_rbf)
